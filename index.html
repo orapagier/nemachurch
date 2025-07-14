@@ -18,6 +18,7 @@
             </div>
             <div class="nav-tabs">
                 <button class="tab-btn active" onclick="showTab('home')">Home</button>
+                <button class="tab-btn" onclick="showTab('speakers')">Speakers</button>
                 <button class="tab-btn" onclick="showTab('about')">About</button>
                 <button class="tab-btn" onclick="showTab('programs')">Programs</button>
                 <button class="tab-btn" onclick="showTab('services')">Services</button>
@@ -26,6 +27,69 @@
         </nav>
     </header>
 
+    <!-- Replace the speakers tab content with this -->
+    <div id="speakers" class="tab-content">
+        <div class="container">
+            <div class="section-header">
+                <h2>Speakers of the Week</h2>
+                <p>Our speakers for this week's services</p>
+            </div>
+            
+            <div class="week-info">
+                <div class="current-week">
+                    <h3 id="week-date">Week of June 12-18, 2023</h3>
+                    <div class="week-theme">
+                        <h4 id="weekly-theme">Theme: Living in God's Grace</h4>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="speakers-grid">
+                <div class="speaker-card midweek">
+                    <div class="service-icon">📖</div>
+                    <h3>Midweek Service</h3>
+                    <div class="service-time">Wednesday 7:00 PM</div>
+                    <div class="speaker-info">
+                        <div class="speaker-name" id="midweek-speaker">Speaker TBA</div>
+                    </div>
+                </div>
+                
+                <div class="speaker-card ministerial">
+                    <div class="service-icon">🙏</div>
+                    <h3>Ministerial Service</h3>
+                    <div class="service-time">Saturday 9:30 AM</div>
+                    <div class="speaker-info">
+                        <div class="speaker-name" id="ministerial-speaker">Speaker TBA</div>
+                    </div>
+                </div>
+                
+                <div class="speaker-card vesper">
+                    <div class="service-icon">🌅</div>
+                    <h3>Vesper Service</h3>
+                    <div class="service-time">Saturday 4:00 PM</div>
+                    <div class="speaker-info">
+                        <div class="speaker-name" id="vesper-speaker">Speaker TBA</div>
+                    </div>
+                </div>
+                
+                <div class="speaker-card divine">
+                    <div class="service-icon">✝️</div>
+                    <h3>Divine Service</h3>
+                    <div class="service-time">Saturday 11:00 AM</div>
+                    <div class="speaker-info">
+                        <div class="speaker-name" id="divine-speaker">Speaker TBA</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="refresh-info">
+                <p>Information is automatically updated from our database</p>
+                <p>Last updated: <span id="last-updated">Just now</span></p>
+                <button class="refresh-btn" onclick="fetchSpeakerData()">Refresh Information</button>
+            </div>
+        </div>
+    </div>
+    
     <!-- Home Tab -->
     <div id="home" class="tab-content active">
         <section class="hero">
