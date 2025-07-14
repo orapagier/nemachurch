@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEMA SDA Church - Welcome Home</title>
+    <title>NEMA SDA Church</title>
     <style>
         * {
             margin: 0;
@@ -50,17 +50,40 @@
         }
 
         .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            font-size: 1.8rem;
+            font-weight: bold;
         }
 
-        .logo::before {
-            content: "✝";
-            font-size: 2rem;
-            color: #ffd700;
+        .logo img {
+            height: 50px;
+            width: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .logo img:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+
+        .logo-main {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .logo-sub {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            font-weight: normal;
         }
 
         .nav-tabs {
@@ -123,7 +146,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="a" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="rgba(255,255,255,0.1)"/><stop offset="100%" stop-color="rgba(255,255,255,0)"/></radialGradient></defs><circle cx="200" cy="200" r="100" fill="url(%23a)"/><circle cx="800" cy="300" r="150" fill="url(%23a)"/><circle cx="400" cy="700" r="120" fill="url(%23a)"/></svg>');
+            background: url('/images/sdalogo.webp');
             animation: float 20s ease-in-out infinite;
         }
 
@@ -403,13 +426,31 @@
             .programs-grid {
                 grid-template-columns: 1fr;
             }
+
+            .logo img {
+                height: 40px;
+            }
+
+            .logo-main {
+                font-size: 1.5rem;
+            }
+
+            .logo-sub {
+                font-size: 0.8rem;
+            }
         }
     </style>
 </head>
 <body>
     <header id="header">
         <nav class="container">
-            <div class="logo">NEMA SDA CHURCH</div>
+            <div class="logo">
+                <img src="/images/logo.png" alt="NEMA SDA Church Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                <div class="logo-text">
+                    <div class="logo-main">NEMA SDA CHURCH</div>
+                    <div class="logo-sub">Seventh-day Adventist</div>
+                </div>
+            </div>
             <div class="nav-tabs">
                 <button class="tab-btn active" onclick="showTab('home')">Home</button>
                 <button class="tab-btn" onclick="showTab('about')">About</button>
@@ -549,12 +590,12 @@
                     <div style="margin: 2rem 0;">
                         <h4>📍 Address</h4>
                         <p>NEMA SDA Church<br>
-                        [Your Church Address]<br>
-                        Butuan City, Caraga</p>
+                        P-10 Los Angeles<br>
+                        Butuan City, 8600</p>
                     </div>
                     <div style="margin: 2rem 0;">
                         <h4>📞 Phone</h4>
-                        <p>(085) XXX-XXXX</p>
+                        <p>09631225067</p>
                     </div>
                     <div style="margin: 2rem 0;">
                         <h4>✉️ Email</h4>
