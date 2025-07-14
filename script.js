@@ -129,6 +129,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 setTimeout(fetchSpeakerData, 100);
             });
         }
+
+    document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.tab-btn').forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+            showTab(btn.getAttribute('data-tab'), e);
+        });
+    });
+});
 });
 
 
