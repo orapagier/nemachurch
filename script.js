@@ -6,7 +6,7 @@ function fetchSpeakerData() {
     
     // Call your Google Apps Script web app
     // Replace with your actual web app URL
-    const webAppUrl = 'YOUR_WEB_APP_URL';
+    const webAppUrl = 'https://script.google.com/macros/s/AKfycbxB0RRdWqMLB3EORJ0g6UlR00aJzLk05LzkCjQp-8qmuGZg2w-oylEkwaocIu1AUzAr/exec';
     
     fetch(webAppUrl)
         .then(response => response.json())
