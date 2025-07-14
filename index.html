@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEMA SDA Church - Welcome Home</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            background: rgba(102, 126, 234, 0.95);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo::before {
+            content: "✝";
+            font-size: 2rem;
+            color: #ffd700;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-tabs button {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-tabs button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .nav-tabs button:hover::before {
+            left: 100%;
+        }
+
+        .nav-tabs button:hover,
+        .nav-tabs button.active {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="a" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="rgba(255,255,255,0.1)"/><stop offset="100%" stop-color="rgba(255,255,255,0)"/></radialGradient></defs><circle cx="200" cy="200" r="100" fill="url(%23a)"/><circle cx="800" cy="300" r="150" fill="url(%23a)"/><circle cx="400" cy="700" r="120" fill="url(%23a)"/></svg>');
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .hero-content {
+            z-index: 2;
+            position: relative;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #fff, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            color: #333;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.5);
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+            padding: 6rem 0 4rem;
+            min-height: 60vh;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* About Section */
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .about-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+        .about-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #667eea;
+        }
+
+        /* Programs Section */
+        .programs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .program-card {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .program-card::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.5s ease;
+        }
+
+        .program-card:hover::after {
+            width: 300px;
+            height: 300px;
+        }
+
+        .program-card:hover {
+            transform: scale(1.05);
+        }
+
+        .program-time {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Services Section */
+        .services-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .service-item {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border-left: 4px solid #667eea;
+        }
+
+        .service-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+        }
+
+        /* Contact Section */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .contact-info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+        }
+
+        .contact-form {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        /* Section Headers */
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-header p {
+            font-size: 1.2rem;
+            color: #666;
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-tabs {
+                gap: 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .about-grid,
+            .programs-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <nav class="container">
+            <div class="logo">NEMA SDA CHURCH</div>
+            <div class="nav-tabs">
+                <button class="tab-btn active" onclick="showTab('home')">Home</button>
+                <button class="tab-btn" onclick="showTab('about')">About</button>
+                <button class="tab-btn" onclick="showTab('programs')">Programs</button>
+                <button class="tab-btn" onclick="showTab('services')">Services</button>
+                <button class="tab-btn" onclick="showTab('contact')">Contact</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Home Tab -->
+    <div id="home" class="tab-content active">
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Welcome to NEMA SDA Church</h1>
+                <p>A place of worship, community, and spiritual growth</p>
+                <button class="cta-button" onclick="showTab('about')">Learn More About Us</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- About Tab -->
+    <div id="about" class="tab-content">
+        <div class="container">
+            <div class="section-header">
+                <h2>About NEMA SDA Church</h2>
+                <p>Discover our mission, vision, and the community that makes us who we are</p>
+            </div>
+            <div class="about-grid">
+                <div class="about-card">
+                    <div class="card-icon">🏛️</div>
+                    <h3>Our Mission</h3>
+                    <p>To spread the love of Christ through worship, fellowship, and service to our community. We strive to create a welcoming environment where everyone can grow in their faith and relationship with God.</p>
+                </div>
+                <div class="about-card">
+                    <div class="card-icon">👥</div>
+                    <h3>Our Community</h3>
+                    <p>We are a diverse, loving family united by our faith in Jesus Christ. Our church welcomes people from all walks of life to worship together and support one another in Christian love.</p>
+                </div>
+                <div class="about-card">
+                    <div class="card-icon">📖</div>
+                    <h3>Our Beliefs</h3>
+                    <p>As Seventh-day Adventists, we believe in the Bible as God's Word, salvation through Jesus Christ, and the importance of living according to God's commandments while awaiting Christ's second coming.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Programs Tab -->
+    <div id="programs" class="tab-content">
+        <div class="container">
+            <div class="section-header">
+                <h2>Upcoming Programs</h2>
+                <p>Join us for these special events and regular activities</p>
+            </div>
+            <div class="programs-grid">
+                <div class="program-card">
+                    <div class="program-time">Saturday 9:00 AM</div>
+                    <h3>Sabbath School</h3>
+                    <p>Bible study and discussion groups for all ages</p>
+                </div>
+                <div class="program-card">
+                    <div class="program-time">Saturday 11:00 AM</div>
+                    <h3>Divine Worship</h3>
+                    <p>Main worship service with inspiring music and message</p>
+                </div>
+                <div class="program-card">
+                    <div class="program-time">Wednesday 7:00 PM</div>
+                    <h3>Prayer Meeting</h3>
+                    <p>Mid-week prayer and Bible study fellowship</p>
+                </div>
+                <div class="program-card">
+                    <div class="program-time">Friday 7:00 PM</div>
+                    <h3>Youth Program</h3>
+                    <p>Activities and Bible study for young people</p>
+                </div>
+                <div class="program-card">
+                    <div class="program-time">Sunday 3:00 PM</div>
+                    <h3>Community Outreach</h3>
+                    <p>Service projects and community assistance programs</p>
+                </div>
+                <div class="program-card">
+                    <div class="program-time">First Sabbath</div>
+                    <h3>Communion Service</h3>
+                    <p>Special service of foot washing and communion</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Services Tab -->
+    <div id="services" class="tab-content">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Services</h2>
+                <p>We offer various ministries to serve our community and members</p>
+            </div>
+            <div class="services-list">
+                <div class="service-item">
+                    <h3>Pastoral Care</h3>
+                    <p>Spiritual guidance, counseling, and support for members and families</p>
+                </div>
+                <div class="service-item">
+                    <h3>Children's Ministry</h3>
+                    <p>Cradle roll, primary, and junior programs for spiritual development</p>
+                </div>
+                <div class="service-item">
+                    <h3>Music Ministry</h3>
+                    <p>Choir, praise team, and instrumental music for worship services</p>
+                </div>
+                <div class="service-item">
+                    <h3>Health Ministry</h3>
+                    <p>Health education, wellness programs, and lifestyle counseling</p>
+                </div>
+                <div class="service-item">
+                    <h3>Education Ministry</h3>
+                    <p>Sabbath school, Bible studies, and Christian education programs</p>
+                </div>
+                <div class="service-item">
+                    <h3>Community Service</h3>
+                    <p>Food distribution, clothing ministry, and disaster relief efforts</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Tab -->
+    <div id="contact" class="tab-content">
+        <div class="container">
+            <div class="section-header">
+                <h2>Contact Us</h2>
+                <p>We'd love to hear from you and welcome you to our church family</p>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h3>Get in Touch</h3>
+                    <div style="margin: 2rem 0;">
+                        <h4>📍 Address</h4>
+                        <p>NEMA SDA Church<br>
+                        [Your Church Address]<br>
+                        Butuan City, Caraga</p>
+                    </div>
+                    <div style="margin: 2rem 0;">
+                        <h4>📞 Phone</h4>
+                        <p>(085) XXX-XXXX</p>
+                    </div>
+                    <div style="margin: 2rem 0;">
+                        <h4>✉️ Email</h4>
+                        <p>info@nemasdachurch.com</p>
+                    </div>
+                    <div style="margin: 2rem 0;">
+                        <h4>⏰ Service Times</h4>
+                        <p>Saturday: 9:00 AM - 12:00 PM<br>
+                        Wednesday: 7:00 PM - 8:30 PM</p>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <h3>Send us a Message</h3>
+                    <form>
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" name="subject" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="cta-button">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 NEMA SDA Church. All rights reserved. | God bless you!</p>
+        </div>
+    </footer>
+
+    <script>
+        function showTab(tabName) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Remove active class from all buttons
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            tabButtons.forEach(button => {
+                button.classList.remove('active');
+            });
+
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+
+            // Scroll to top for better UX
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Form submission handler
+        document.querySelector('form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you for your message! We will get back to you soon.');
+            e.target.reset();
+        });
+
+        // Add smooth scrolling to CTA button
+        document.querySelector('.cta-button').addEventListener('click', (e) => {
+            if (e.target.textContent === 'Learn More About Us') {
+                setTimeout(() => {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                }, 100);
+            }
+        });
+    </script>
+</body>
+</html>
