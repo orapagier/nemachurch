@@ -1,4 +1,4 @@
-function showTab(tabName) {
+function showTab(tabName, event) {
     // Hide all tab contents
     const tabContents = document.querySelectorAll('.tab-content');
     tabContents.forEach(content => {
@@ -15,7 +15,9 @@ function showTab(tabName) {
     document.getElementById(tabName).classList.add('active');
     
     // Add active class to clicked button
-    event.target.classList.add('active');
+    if (event && event.target) {
+        event.target.classList.add('active');
+    }
 
     // Scroll to top for better UX
     window.scrollTo({
