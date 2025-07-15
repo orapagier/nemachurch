@@ -30,6 +30,28 @@ function refreshPage() {
     window.location.reload();
 }
 
+function fetchSpeakerData() {
+    // Show loading indicator if desired
+    document.getElementById('last-updated').textContent = 'Loading...';
+
+    // Replace with your Apps Script web app URL
+    fetch('YOUR_APPS_SCRIPT_WEB_APP_URL')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('week-date').textContent = data.weekDate;
+            document.getElementById('weekly-theme').textContent = 'Theme: ' + data.weeklyTheme;
+            document.getElementById('midweek-speaker').textContent = data.midweekSpeaker;
+            document.getElementById('ministerial-speaker').textContent = data.ministerialSpeaker;
+            document.getElementById('vesper-speaker').textContent = data.vesperSpeaker;
+            document.getElementById('divine-speaker').textContent = data.divineSpeaker;
+            document.getElementById('last-updated').textContent = new Date().toLocaleString();
+        })
+        .catch(error => {
+            document.getElementById('last-updated').textContent = 'Failed to load!';
+            console.error('Error fetching speaker data:', error);
+        });
+}
+
 // Header scroll effect
 window.addEventListener('scroll', () => {
     const header = document.getElementById('header');
