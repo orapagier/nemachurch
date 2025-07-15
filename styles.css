@@ -199,22 +199,32 @@ nav {
     box-shadow: 0 6px 20px rgba(255, 215, 0, 0.5);
 }
 
-/* Tab Content */
+/* Tab Content - Fixed visibility rules */
 .tab-content {
-    display: none;
+    display: none !important;  /* Force hide all tabs */
     padding: 6rem 0 4rem;
     min-height: 60vh;
-    animation: fadeIn 0.5s ease-in;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
 }
 
 .tab-content.active {
-    display: block;
+    display: block !important;  /* Force show active tab */
+    opacity: 1;
+    animation: fadeIn 0.5s ease-in;
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+    from { 
+        opacity: 0; 
+        transform: translateY(10px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
 }
+
 
 /* About Section */
 .about-grid {
