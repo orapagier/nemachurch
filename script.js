@@ -127,13 +127,7 @@ function fetchSpeakerData() {
                 }
             });
         })
-        .finally(() => {
-            // Reset refresh button
-            if (refreshBtn) {
-                refreshBtn.classList.remove('loading');
-                refreshBtn.textContent = 'Refresh Information';
-            }
-        });
+
 }
 
 // Header scroll effect
