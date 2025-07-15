@@ -29,7 +29,6 @@ function showTab(tabName, event) {
     // If programs tab (not speakers), fetch data
     if(tabName === "programs" && typeof fetchSpeakerData === "function") {
         fetchSpeakerData();
-    else showTab();
     }
 }
 
@@ -128,7 +127,13 @@ function fetchSpeakerData() {
                 }
             });
         })
-
+        .finally(() => {
+            // Reset loading state
+            if (refreshBtn) {
+                refreshBtn.classList.remove('loading');
+                refreshBtn.textContent = 'Refresh';
+            }
+        });
 }
 
 // Header scroll effect
