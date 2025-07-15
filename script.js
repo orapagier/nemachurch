@@ -29,6 +29,7 @@ function showTab(tabName, event) {
     // If programs tab (not speakers), fetch data
     if(tabName === "programs" && typeof fetchSpeakerData === "function") {
         fetchSpeakerData();
+    else showTab();
     }
 }
 
