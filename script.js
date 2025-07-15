@@ -1,13 +1,11 @@
-function showTab(tabName) {
+function showTab(tabName, event) {
     // Hide all tab contents
-    const tabContents = document.querySelectorAll('.tab-content');
-    tabContents.forEach(content => {
+    document.querySelectorAll('.tab-content').forEach(content => {
         content.classList.remove('active');
     });
 
     // Remove active class from all buttons
-    const tabButtons = document.querySelectorAll('.tab-btn');
-    tabButtons.forEach(button => {
+    document.querySelectorAll('.tab-btn').forEach(button => {
         button.classList.remove('active');
     });
 
@@ -15,20 +13,24 @@ function showTab(tabName) {
     document.getElementById(tabName).classList.add('active');
     
     // Add active class to clicked button
-    event.target.classList.add('active');
+    if (event && event.currentTarget) {
+        event.currentTarget.classList.add('active');
+    } else {
+        // If no event (programmatic call), find and activate the corresponding button
+        const targetButton = document.querySelector(`[data-tab="${tabName}"]`);
+        if (targetButton) {
+            targetButton.classList.add('active');
+        }
+    }
 
     // Scroll to top for better UX
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    // Special case for programs tab
+    // If programs tab (not speakers), fetch data
     if(tabName === "programs" && typeof fetchSpeakerData === "function") {
         fetchSpeakerData();
     }
 }
-
 
 function refreshPage() {
     window.location.reload();
@@ -125,13 +127,7 @@ function fetchSpeakerData() {
                 }
             });
         })
-        .finally(() => {
-            // Reset loading state
-            if (refreshBtn) {
-                refreshBtn.classList.remove('loading');
-                refreshBtn.textContent = 'Refresh Data';
-            }
-        });
+
 }
 
 // Header scroll effect
@@ -161,24 +157,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // Tab navigation event listeners
     document.querySelectorAll('.tab-btn').forEach(function(btn) {
         btn.addEventListener('click', function(e) {
-            e.preventDefault(); // Prevent any default behavior
-            const tabName = this.getAttribute('data-tab');
-            console.log('Tab clicked:', tabName); // Debug log
+            const tabName = btn.getAttribute('data-tab');
             showTab(tabName, e);
         });
     });
 
-    // Fetch speaker data on initial load (only if programs tab is active)
-    const programsTab = document.getElementById('programs');
-    if (programsTab && programsTab.classList.contains('active')) {
-        fetchSpeakerData();
-    }
+    // Fetch speaker data on initial load
+    fetchSpeakerData();
     
-    // Auto-refresh speaker data every 5 minutes (300000ms) - only if programs tab is active
-    setInterval(() => {
-        const programsTab = document.getElementById('programs');
-        if (programsTab && programsTab.classList.contains('active')) {
-            fetchSpeakerData();
-        }
-    }, 300000);
+    // Auto-refresh speaker data every 5 minutes (300000ms)
+    setInterval(fetchSpeakerData, 300000);
 });
