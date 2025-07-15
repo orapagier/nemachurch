@@ -52,7 +52,7 @@ function getWeekString(weekDateStr) {
     let monthName = date.toLocaleString('default', { month: 'long' });
     let year = date.getFullYear();
 
-    return `${weekName} Week of ${monthName} ${year}`;
+    return `Speakers for the ${weekName} Week of ${monthName} ${year}`;
 }
 
 function fetchSpeakerData() {
