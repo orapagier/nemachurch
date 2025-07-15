@@ -10,14 +10,14 @@ function showTab(tabName, event) {
     });
 
     // Show selected tab content
-    document.getElementById(tabName).classList.add('active');
+    const targetTab = document.getElementById(tabName);
+    if (targetTab) {
+        targetTab.classList.add('active');
+    }
     
     // Add active class to clicked button
-    if (event) {
-        const clickedButton = event.target.closest('.tab-btn');
-        if (clickedButton) {
-            clickedButton.classList.add('active');
-        }
+    if (event && event.currentTarget) {
+        event.currentTarget.classList.add('active');
     } else {
         // If no event (programmatic call), find and activate the corresponding button
         const targetButton = document.querySelector(`[data-tab="${tabName}"]`);
@@ -29,7 +29,7 @@ function showTab(tabName, event) {
     // Scroll to top for better UX
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    // If programs tab (not speakers), fetch data
+    // If programs tab, fetch data
     if(tabName === "programs" && typeof fetchSpeakerData === "function") {
         fetchSpeakerData();
     }
@@ -130,7 +130,13 @@ function fetchSpeakerData() {
                 }
             });
         })
-
+        .finally(() => {
+            // Reset loading state
+            if (refreshBtn) {
+                refreshBtn.classList.remove('loading');
+                refreshBtn.textContent = 'Refresh Data';
+            }
+        });
 }
 
 // Header scroll effect
@@ -160,14 +166,24 @@ document.addEventListener('DOMContentLoaded', () => {
     // Tab navigation event listeners
     document.querySelectorAll('.tab-btn').forEach(function(btn) {
         btn.addEventListener('click', function(e) {
-            const tabName = btn.getAttribute('data-tab');
+            e.preventDefault(); // Prevent any default behavior
+            const tabName = this.getAttribute('data-tab');
+            console.log('Tab clicked:', tabName); // Debug log
             showTab(tabName, e);
         });
     });
 
-    // Fetch speaker data on initial load
-    fetchSpeakerData();
+    // Fetch speaker data on initial load (only if programs tab is active)
+    const programsTab = document.getElementById('programs');
+    if (programsTab && programsTab.classList.contains('active')) {
+        fetchSpeakerData();
+    }
     
-    // Auto-refresh speaker data every 5 minutes (300000ms)
-    setInterval(fetchSpeakerData, 300000);
+    // Auto-refresh speaker data every 5 minutes (300000ms) - only if programs tab is active
+    setInterval(() => {
+        const programsTab = document.getElementById('programs');
+        if (programsTab && programsTab.classList.contains('active')) {
+            fetchSpeakerData();
+        }
+    }, 300000);
 });
