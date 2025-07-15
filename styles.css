@@ -150,7 +150,7 @@ nav {
 
 .hero-content {
     z-index: 2;
-    position: fixed;
+    position: relative;
     animation: fadeInUp 1s ease-out;
 }
 
