@@ -19,6 +19,7 @@
             <div class="nav-tabs">
                 <button class="tab-btn active" data-tab="home">Home</button>
                 <button class="tab-btn" data-tab="programs">Programs</button>
+                <button class="tab-btn" data-tab="programs">Programs 2</button>
                 <button class="tab-btn" data-tab="services">Services</button>
                 <button class="tab-btn" data-tab="about">About</button>
                 <button class="tab-btn" data-tab="contact">Contact</button>
@@ -91,6 +92,65 @@
     </div>
    
 
+
+
+    <!-- Replace the speakers tab content with this -->
+    <div id="services" class="tab-content">
+        <div class="container">
+
+
+          <div class="week-info">
+                <div class="current-week">
+                    <h3 id="week-date"> This Week </h3>
+                    <div class="week-theme">
+                        <h4 id="weekly-theme">Theme: Living in God's Grace</h4>
+                    </div>
+                </div>
+
+            <div class="speakers-grid">
+                <div class="speaker-card midweek">
+                    <div class="service-icon">📖</div>
+                    <h3>Midweek Worship</h3>
+                    <div class="service-time">Wednesday 7:00 PM</div>
+                    <div class="speaker-info">
+                        <div class="speaker-name" id="midweek-speaker">Speaker TBA</div>
+                    </div>
+                </div>
+
+                <div class="speaker-card ministerial">
+                    <div class="service-icon">🙏</div>
+                    <h3>Ministerial Worship</h3>
+                    <div class="service-time">Friday 7:00 PM</div>
+                    <div class="speaker-info">
+                        <div class="speaker-name" id="ministerial-speaker">Speaker TBA</div>
+                    </div>
+                </div>
+
+                <div class="speaker-card vesper">
+                    <div class="service-icon">🌅</div>
+                    <h3>Vesper Worship</h3>
+                    <div class="service-time">Friday 7:45 PM</div>
+                    <div class="speaker-info">
+                        <div class="speaker-name" id="vesper-speaker">Speaker TBA</div>
+                    </div>
+                </div>
+
+                <div class="speaker-card divine">
+                    <div class="service-icon">✝️</div>
+                    <h3>Divine Worship</h3>
+                    <div class="service-time">Saturday 10:30 AM</div>
+                    <div class="speaker-info">
+                        <div class="speaker-name" id="divine-speaker">Speaker TBA</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+        
     <!-- Services Tab -->
     <div id="services" class="tab-content">
         <div class="container">
@@ -154,69 +214,6 @@
             </div>
         </div>
     </div>
-
-        
-    <!-- Contact Tab -->
-    <div id="contact" class="tab-content">
-        <div class="container">
-            <div class="section-header">
-                <h2>Contact Us</h2>
-                <p>We'd love to hear from you and welcome you to our church family</p>
-            </div>
-            <div class="contact-grid">
-                <div class="contact-info">
-                    <h3>Get in Touch</h3>
-                    <div style="margin: 2rem 0;">
-                        <h4>📍 Address</h4>
-                        <p>NEMA SDA Church<br>
-                        P-10 Los Angeles<br>
-                        Butuan City, 8600</p>
-                    </div>
-                    <div style="margin: 2rem 0;">
-                        <h4>📞 Phone</h4>
-                        <p>09631225067</p>
-                    </div>
-                    <div style="margin: 2rem 0;">
-                        <h4>✉️ Email</h4>
-                        <p>info@nemasdachurch.com</p>
-                    </div>
-                    <div style="margin: 2rem 0;">
-                        <h4>⏰ Service Times</h4>
-                        <p>Saturday: 9:00 AM - 12:00 PM<br>
-                        Wednesday: 7:00 PM - 8:30 PM</p>
-                    </div>
-                </div>
-                <div class="contact-form">
-                    <h3>Send us a Message</h3>
-                    <form>
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" id="name" name="name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="subject">Subject</label>
-                            <input type="text" id="subject" name="subject" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" name="message" rows="5" required></textarea>
-                        </div>
-                        <button type="submit" class="cta-button">Send Message</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 NEMA SDA Church. All rights reserved. | God bless you!</p>
-        </div>
-    </footer>
 
     <script src="script.js"></script>
 </body>
