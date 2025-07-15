@@ -35,7 +35,7 @@ function fetchSpeakerData() {
     document.getElementById('last-updated').textContent = 'Loading...';
 
     // Replace with your Apps Script web app URL
-    fetch('YOUR_APPS_SCRIPT_WEB_APP_URL')
+    fetch('https://script.google.com/macros/s/AKfycbwr1pUO0WnJX7vyPp6TpImnFgW8ycyOeRB4DpOyJ8g2wpQuAMSpztfwECQXtQxehijL/exec')
         .then(response => response.json())
         .then(data => {
             document.getElementById('week-date').textContent = data.weekDate;
