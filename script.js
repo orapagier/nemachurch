@@ -30,6 +30,25 @@ function refreshPage() {
     window.location.reload();
 }
 
+// --- ADDED HELPER FUNCTION ---
+function getWeekString(weekDateStr) {
+    // Handle date range string (e.g., "2025-07-13 - 2025-07-19")
+    let weekDate = weekDateStr.split(' - ')[0]; // Use start of week
+    let date = new Date(weekDate);
+
+    // Calculate the week number in the month
+    let firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+    let weekNum = Math.ceil((date.getDate() + firstDay.getDay()) / 7);
+
+    const weekNames = ['First', 'Second', 'Third', 'Fourth', 'Fifth'];
+    let weekName = weekNames[weekNum - 1] || `${weekNum}th`;
+
+    let monthName = date.toLocaleString('default', { month: 'long' });
+    let year = date.getFullYear();
+
+    return `${weekName} Week of ${monthName} ${year}`;
+}
+
 function fetchSpeakerData() {
     // Show loading indicator if desired
     document.getElementById('last-updated').textContent = 'Loading...';
@@ -38,7 +57,9 @@ function fetchSpeakerData() {
     fetch('https://script.google.com/macros/s/AKfycbwr1pUO0WnJX7vyPp6TpImnFgW8ycyOeRB4DpOyJ8g2wpQuAMSpztfwECQXtQxehijL/exec')
         .then(response => response.json())
         .then(data => {
-            document.getElementById('week-date').textContent = data.weekDate;
+            // --- MODIFIED LINE ---
+            document.getElementById('week-date').textContent = getWeekString(data.weekDate);
+
             document.getElementById('weekly-theme').textContent = 'Theme: ' + data.weeklyTheme;
             document.getElementById('midweek-speaker').textContent = data.midweekSpeaker;
             document.getElementById('ministerial-speaker').textContent = data.ministerialSpeaker;
