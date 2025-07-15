@@ -13,8 +13,11 @@ function showTab(tabName, event) {
     document.getElementById(tabName).classList.add('active');
     
     // Add active class to clicked button
-    if (event && event.currentTarget) {
-        event.currentTarget.classList.add('active');
+    if (event) {
+        const clickedButton = event.target.closest('.tab-btn');
+        if (clickedButton) {
+            clickedButton.classList.add('active');
+        }
     } else {
         // If no event (programmatic call), find and activate the corresponding button
         const targetButton = document.querySelector(`[data-tab="${tabName}"]`);
