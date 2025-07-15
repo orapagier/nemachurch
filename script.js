@@ -15,13 +15,19 @@ function showTab(tabName, event) {
     // Add active class to clicked button
     if (event && event.currentTarget) {
         event.currentTarget.classList.add('active');
+    } else {
+        // If no event (programmatic call), find and activate the corresponding button
+        const targetButton = document.querySelector(`[data-tab="${tabName}"]`);
+        if (targetButton) {
+            targetButton.classList.add('active');
+        }
     }
 
     // Scroll to top for better UX
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    // If speakers tab, fetch data
-    if(tabName === "speakers" && typeof fetchSpeakerData === "function") {
+    // If programs tab (not speakers), fetch data
+    if(tabName === "programs" && typeof fetchSpeakerData === "function") {
         fetchSpeakerData();
     }
 }
@@ -30,7 +36,7 @@ function refreshPage() {
     window.location.reload();
 }
 
-// --- ADDED HELPER FUNCTION ---
+// Helper function to format week string
 function getWeekString(weekDateStr) {
     // Handle date range string (e.g., "2025-07-13 - 2025-07-19")
     let weekDate = weekDateStr.split(' - ')[0]; // Use start of week
@@ -50,42 +56,101 @@ function getWeekString(weekDateStr) {
 }
 
 function fetchSpeakerData() {
-    // Show loading indicator if desired
-    document.getElementById('last-updated').textContent = 'Loading...';
+    // Show loading indicator
+    const refreshBtn = document.querySelector('.refresh-btn');
+    const lastUpdated = document.getElementById('last-updated');
+    
+    if (refreshBtn) {
+        refreshBtn.classList.add('loading');
+        refreshBtn.textContent = 'Loading...';
+    }
+    
+    if (lastUpdated) {
+        lastUpdated.textContent = 'Loading...';
+    }
 
     // Replace with your Apps Script web app URL
     fetch('https://script.google.com/macros/s/AKfycbwr1pUO0WnJX7vyPp6TpImnFgW8ycyOeRB4DpOyJ8g2wpQuAMSpztfwECQXtQxehijL/exec')
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
         .then(data => {
-            // --- MODIFIED LINE ---
-            document.getElementById('week-date').textContent = getWeekString(data.weekDate);
+            // Update the week date display
+            const weekDateElement = document.getElementById('week-date');
+            if (weekDateElement && data.weekDate) {
+                weekDateElement.textContent = getWeekString(data.weekDate);
+            }
 
-            document.getElementById('weekly-theme').textContent = 'Theme: ' + data.weeklyTheme;
-            document.getElementById('midweek-speaker').textContent = data.midweekSpeaker;
-            document.getElementById('ministerial-speaker').textContent = data.ministerialSpeaker;
-            document.getElementById('vesper-speaker').textContent = data.vesperSpeaker;
-            document.getElementById('divine-speaker').textContent = data.divineSpeaker;
-            document.getElementById('last-updated').textContent = new Date().toLocaleString();
+            // Update theme
+            const themeElement = document.getElementById('weekly-theme');
+            if (themeElement && data.weeklyTheme) {
+                themeElement.textContent = 'Theme: ' + data.weeklyTheme;
+            }
+
+            // Update speaker names
+            const speakers = [
+                { id: 'midweek-speaker', data: data.midweekSpeaker },
+                { id: 'ministerial-speaker', data: data.ministerialSpeaker },
+                { id: 'vesper-speaker', data: data.vesperSpeaker },
+                { id: 'divine-speaker', data: data.divineSpeaker }
+            ];
+
+            speakers.forEach(speaker => {
+                const element = document.getElementById(speaker.id);
+                if (element) {
+                    element.textContent = speaker.data || 'Speaker TBA';
+                }
+            });
+
+            // Update last updated timestamp
+            if (lastUpdated) {
+                lastUpdated.textContent = new Date().toLocaleString();
+            }
         })
         .catch(error => {
-            document.getElementById('last-updated').textContent = 'Failed to load!';
             console.error('Error fetching speaker data:', error);
+            
+            // Show error message
+            if (lastUpdated) {
+                lastUpdated.textContent = 'Failed to load data';
+            }
+            
+            // Reset speaker names to default if fetch fails
+            const speakerIds = ['midweek-speaker', 'ministerial-speaker', 'vesper-speaker', 'divine-speaker'];
+            speakerIds.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.textContent = 'Speaker TBA';
+                }
+            });
+        })
+        .finally(() => {
+            // Reset refresh button
+            if (refreshBtn) {
+                refreshBtn.classList.remove('loading');
+                refreshBtn.textContent = 'Refresh Information';
+            }
         });
 }
 
 // Header scroll effect
 window.addEventListener('scroll', () => {
     const header = document.getElementById('header');
-    if (window.scrollY > 100) {
-        header.classList.add('scrolled');
-    } else {
-        header.classList.remove('scrolled');
+    if (header) {
+        if (window.scrollY > 100) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
     }
 });
 
-// Form submission handler and tab event setup
+// Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    // Form handler
+    // Form submission handler
     const form = document.querySelector('form');
     if (form) {
         form.addEventListener('submit', (e) => {
@@ -95,27 +160,17 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // CTA smooth scroll
-    const ctaButton = document.querySelector('.cta-button');
-    if (ctaButton) {
-        ctaButton.addEventListener('click', (e) => {
-            if (e.target.textContent === 'Learn More About Us') {
-                setTimeout(() => {
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                }, 100);
-            }
-        });
-    }
-
     // Tab navigation event listeners
     document.querySelectorAll('.tab-btn').forEach(function(btn) {
         btn.addEventListener('click', function(e) {
-            showTab(btn.getAttribute('data-tab'), e);
+            const tabName = btn.getAttribute('data-tab');
+            showTab(tabName, e);
         });
     });
 
-    // Fetch speaker data on load if needed
-    if (typeof fetchSpeakerData === "function") {
-        fetchSpeakerData();
-    }
+    // Fetch speaker data on initial load
+    fetchSpeakerData();
+    
+    // Auto-refresh speaker data every 5 minutes (300000ms)
+    setInterval(fetchSpeakerData, 300000);
 });
