@@ -347,7 +347,7 @@ nav {
     font-weight: normal;
 }
 
-/* ---- MODIFIED SPEAKER GRID AND CARD ---- */
+/* Speaker Grid and Cards */
 .speakers-grid {
     display: flex;
     flex-direction: row;
@@ -375,27 +375,30 @@ nav {
     text-align: center;
 }
 
-/* Tighter styles for content inside speaker cards */
 .speaker-card h3 {
     color: #333;
     margin-bottom: 0.3rem;
     font-size: 1.1rem;
 }
+
 .service-icon {
     font-size: 2rem;
     margin-bottom: 0.6rem;
     color: #667eea;
 }
+
 .service-time {
     color: #666;
     font-size: 1.05rem;
     margin-bottom: 1rem;
     font-weight: bold;
 }
+
 .speaker-info {
     border-top: 1px solid #eee;
     padding-top: 1rem;
 }
+
 .speaker-name {
     font-size: 1.05rem;
     font-weight: bold;
@@ -417,12 +420,15 @@ nav {
 .speaker-card.midweek::before {
     background: linear-gradient(90deg, #4CAF50, #45a049);
 }
+
 .speaker-card.ministerial::before {
     background: linear-gradient(90deg, #2196F3, #1976D2);
 }
+
 .speaker-card.vesper::before {
     background: linear-gradient(90deg, #FF9800, #F57C00);
 }
+
 .speaker-card.divine::before {
     background: linear-gradient(90deg, #9C27B0, #7B1FA2);
 }
@@ -431,21 +437,6 @@ nav {
     transform: translateY(-7px);
     box-shadow: 0 14px 28px rgba(0,0,0,0.11);
 }
-
-/* Responsive: stack cards on small screens */
-@media (max-width: 900px) {
-    .speakers-grid {
-        flex-direction: column;
-        gap: 1.3rem;
-        max-width: 100%;
-    }
-    .speaker-card {
-        max-width: 100%;
-        font-size: 1em;
-    }
-}
-
-/* ---- END MODIFICATION ---- */
 
 .speaker-topic {
     color: #666;
@@ -594,6 +585,19 @@ footer {
 }
 
 /* Responsive Design */
+@media (max-width: 900px) {
+    .speakers-grid {
+        flex-direction: column;
+        gap: 1.3rem;
+        max-width: 100%;
+    }
+    
+    .speaker-card {
+        max-width: 100%;
+        font-size: 1em;
+    }
+}
+
 @media (max-width: 768px) {
     .nav-tabs {
         gap: 1rem;
@@ -609,7 +613,7 @@ footer {
     
     .about-grid,
     .programs-grid {
-     
+        grid-template-columns: 1fr;
     }
 
     .logo img {
