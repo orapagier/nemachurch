@@ -81,7 +81,7 @@ nav {
 
 .nav-tabs {
     display: flex;
-    gap: 2rem;
+    gap: 1rem;
     flex-wrap: wrap;
 }
 
