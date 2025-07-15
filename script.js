@@ -1,39 +1,34 @@
-function showTab(tabName, event) {
+function showTab(tabName) {
     // Hide all tab contents
-    document.querySelectorAll('.tab-content').forEach(content => {
+    const tabContents = document.querySelectorAll('.tab-content');
+    tabContents.forEach(content => {
         content.classList.remove('active');
     });
 
     // Remove active class from all buttons
-    document.querySelectorAll('.tab-btn').forEach(button => {
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    tabButtons.forEach(button => {
         button.classList.remove('active');
     });
 
     // Show selected tab content
-    const targetTab = document.getElementById(tabName);
-    if (targetTab) {
-        targetTab.classList.add('active');
-    }
+    document.getElementById(tabName).classList.add('active');
     
     // Add active class to clicked button
-    if (event && event.currentTarget) {
-        event.currentTarget.classList.add('active');
-    } else {
-        // If no event (programmatic call), find and activate the corresponding button
-        const targetButton = document.querySelector(`[data-tab="${tabName}"]`);
-        if (targetButton) {
-            targetButton.classList.add('active');
-        }
-    }
+    event.target.classList.add('active');
 
     // Scroll to top for better UX
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
 
-    // If programs tab, fetch data
+    // Special case for programs tab
     if(tabName === "programs" && typeof fetchSpeakerData === "function") {
         fetchSpeakerData();
     }
 }
+
 
 function refreshPage() {
     window.location.reload();
@@ -151,17 +146,7 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Initialize everything when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    // Form submission handler
-    const form = document.querySelector('form');
-    if (form) {
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            alert('Thank you for your message! We will get back to you soon.');
-            e.target.reset();
-        });
-    }
+
 
     // Tab navigation event listeners
     document.querySelectorAll('.tab-btn').forEach(function(btn) {
